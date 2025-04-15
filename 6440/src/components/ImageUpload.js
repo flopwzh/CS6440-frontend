@@ -13,7 +13,11 @@ export default function ImageUpload() {
   const [id, setID] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [dob, setDoB] = useState("");
+  const [gender, setGender] = useState("");
   const [creatingPatient, setCreatingPatient] = useState(false);
+  const [creatingPatientandImage, setCreatingPatientandImage] = useState(false);
+  const [patientAndImageCreationResult, setPatientAndImageCreationResult] = useState(null);
   const [creationResult, setCreationResult] = useState(null);
 
   const [image, setImage] = useState(null);
@@ -114,9 +118,43 @@ export default function ImageUpload() {
     setDownloading(false)
   }
 
+  // handles patient + image creation
+  const handlePatientImageCreation = async (e) => {
+    e.preventDefault();
+    if (!firstName || !lastName || !dob || !gender || !file) {
+      alert("Please enter a valid name, date of birth, and gender, and image for the patient");
+      return;
+    }
+    setCreatingPatientandImage(true)
+
+    const formData = new FormData();
+    formData.append("given_name", firstName);
+    formData.append("family_name", lastName);
+    formData.append("gender", gender);
+    formData.append("birth_date", dob);
+    formData.append("image", file)
+
+    try {
+      const response = await fetch(
+        "https://flask-backend-100322540002.us-central1.run.app/api/patient-analysis",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+      const data = await response.json();
+      console.log(data)
+      setPatientAndImageCreationResult(data);
+    } catch (error) {
+      console.error("Error creating patient and uploading image: ", error);
+      alert("Failed to create patient and upload image");
+    }
+    setCreatingPatientandImage(false)
+  }
+
   return (
     <div>
-      <Card className="p-4 max-w-md mx-auto mt-10">
+      {/* <Card className="p-4 max-w-md mx-auto mt-10">
         <CardContent>
           <h2 className="text-xl font-semibold mb-4">Upload Skin Image</h2>
           <form onSubmit={handleImageUpload} className="space-y-4">
@@ -151,22 +189,12 @@ export default function ImageUpload() {
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card> */}
 
-      <Card className="p-4 max-w-md mx-auto mt-10">
+      {/* <Card className="p-4 max-w-md mx-auto mt-10">
         <CardContent>
           <h2 className="text-xl font-semibold mb-4">Create Patient</h2>
           <form onSubmit={handlePatientCreation} className="space-y-4">
-            {/* <div>
-              <Label htmlFor="id">Patient ID</Label>
-              <Input
-                id="id"
-                type="text"
-                value={id}
-                onChange={(e) => setID(e.target.value)}
-                required
-              />
-            </div> */}
             <div>
               <Label htmlFor="firstName">Patient First Name</Label>
               <Input
@@ -198,8 +226,75 @@ export default function ImageUpload() {
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card> */}
 
+      <Card className="p-4 max-w-md mx-auto mt-10">
+        <CardContent>
+          <h2 className="text-xl font-semibold mb-4">Upload Skin Image</h2>
+          <form onSubmit={handlePatientImageCreation} className="space-y-4">
+          <div>
+              <Label htmlFor="firstName">Patient First Name</Label>
+              <Input
+                id="firstName"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="lastName">Patient Last Name</Label>
+              <Input
+                id="lastName"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="dob">Patient Date of Birth</Label>
+              <Input
+                id="dob"
+                type="text"
+                value={dob}
+                onChange={(e) => setDoB(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="gender">Patient Gender</Label>
+              <Input
+                id="gender"
+                type="text"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="image">Select Image</Label>
+              <Input
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files[0])}
+                required
+              />
+            </div>
+            <Button type="submit" disabled={creatingPatientandImage} className="w-full">
+              {creatingPatientandImage ? "Uploading..." : "Analyze Image"}
+            </Button>
+          </form>
+          {patientAndImageCreationResult && (
+            <div className="mt-4 p-2 border rounded">
+              <h3 className="font-medium">Analysis Result:</h3>
+              <pre className="text-sm text-gray-600">{JSON.stringify(patientAndImageCreationResult, null, 2)}</pre>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      
       <Card className="p-4 max-w-md mx-auto mt-10">
         <CardContent>
           <h2 className="text-xl font-semibold mb-4">Download Image</h2>
