@@ -1,12 +1,29 @@
 import './App.css';
+import Navbar from './components/Navbar';
+import {
+  BrowserRouter as Router,
+	Routes,
+	Route,
+} from 'react-router-dom';
 import ImageUpload from './components/ImageUpload';
+import Upload from './components/Upload';
+import Download from './components/Download';
+import Create from './components/Create';
 
 function App() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <ImageUpload />
-    </div>
-  );
+	return (
+		<Router>
+			<Navbar />
+			<Routes>
+				<Route path="/Upload" element={<Upload />} />
+				<Route path="/Download" element={<Download />} />
+        <Route path="/Create" element={<Create />} />
+			</Routes>
+		</Router>
+    // <div>
+    //   <ImageUpload/>
+    // </div>
+	);
 }
 
 export default App;
