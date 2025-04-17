@@ -8,6 +8,9 @@ const Navbar = () => {
 		<>
 			<Nav>
 				<NavMenu>
+					<NavLink to="/" activeStyle>
+						Home
+					</NavLink>
 					<NavLink to="/Upload" activeStyle>
 						Upload Image
 					</NavLink>

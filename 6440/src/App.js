@@ -9,15 +9,17 @@ import ImageUpload from './components/ImageUpload';
 import Upload from './components/Upload';
 import Download from './components/Download';
 import Create from './components/Create';
+import Home from './components/Home';
 
 function App() {
 	return (
 		<Router>
 			<Navbar />
 			<Routes>
-				<Route path="/Upload" element={<Upload />} />
-				<Route path="/Download" element={<Download />} />
-        <Route path="/Create" element={<Create />} />
+				<Route path="/" element={<Home/>}/>
+				<Route path="/Upload" element={<Upload/>} />
+				<Route path="/Download" element={<Download/>} />
+        		<Route path="/Create" element={<Create/>} />
 			</Routes>
 		</Router>
     // <div>
