@@ -4,6 +4,8 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card, CardContent } from "./ui/card";
 
+import "./Create.css";
+
 const Create = () => {
 
     const [first, setFirst] = useState("");
@@ -66,25 +68,25 @@ const Create = () => {
 
     return (
         <div>
-            <Card>
+            <Card className="create-container">
                 <CardContent>
                     <h2>Create Patient</h2>
-                    <form onSubmit={handleCreation}>
+                    <form onSubmit={handleCreation} className="create-form">
                     <div>
                         <Label htmlFor="first">Patient First Name</Label>
-                        <Input id="first" type="text" value={first} onChange={(e) => setFirst(e.target.value)} required/>
+                        <Input id="first" type="text" value={first} autocomplete="off" onChange={(e) => setFirst(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="last">Patient Last Name</Label>
-                        <Input id="last" type="text" value={last} onChange={(e) => setLast(e.target.value)} required/>
+                        <Input id="last" type="text" value={last} autocomplete="off" onChange={(e) => setLast(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="dob">Patient Date of Birth</Label>
-                        <Input id="dob" type="text" value={dob} onChange={(e) => setDob(e.target.value)} required/>
+                        <Input id="dob" type="text" value={dob} autocomplete="off" onChange={(e) => setDob(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="gender">Patient Gender</Label>
-                        <Input id="gender" type="text" value={gender} onChange={(e) => setGender(e.target.value)} required/>
+                        <Input id="gender" type="text" value={gender} autocomplete="off" onChange={(e) => setGender(e.target.value)} required/>
                     </div>
                     <div>
                         <Button type="submit" disabled={loading}>
@@ -94,7 +96,7 @@ const Create = () => {
                     </form>
                     {result && (
                         <div>
-                            <h3>Done! Created patient:</h3>
+                            <h3>Created patient:</h3>
                             <pre>{JSON.stringify(result, null, 2)}</pre>
                         </div>
                     )}

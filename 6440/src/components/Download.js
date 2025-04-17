@@ -4,6 +4,8 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card, CardContent } from "./ui/card";
 
+import "./Download.css"
+
 const Download = () => {
 
     const [first, setFirst] = useState("");
@@ -64,25 +66,25 @@ const Download = () => {
 
     return (
         <div>
-            <Card>
+            <Card className="download-container">
                 <CardContent>
                     <h2>Download Patient Images</h2>
-                    <form onSubmit={handleDownload}>
+                    <form onSubmit={handleDownload} className="download-form">
                     <div>
                         <Label htmlFor="first">Patient First Name</Label>
-                        <Input id="first" type="text" value={first} onChange={(e) => setFirst(e.target.value)} required/>
+                        <Input id="first" type="text" value={first} autocomplete="off" onChange={(e) => setFirst(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="last">Patient Last Name</Label>
-                        <Input id="last" type="text" value={last} onChange={(e) => setLast(e.target.value)} required/>
+                        <Input id="last" type="text" value={last} autocomplete="off" onChange={(e) => setLast(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="dob">Patient Date of Birth</Label>
-                        <Input id="dob" type="text" value={dob} onChange={(e) => setDob(e.target.value)} required/>
+                        <Input id="dob" type="text" value={dob} autocomplete="off" onChange={(e) => setDob(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="gender">Patient Gender</Label>
-                        <Input id="gender" type="text" value={gender} onChange={(e) => setGender(e.target.value)} required/>
+                        <Input id="gender" type="text" value={gender} autocomplete="off" onChange={(e) => setGender(e.target.value)} required/>
                     </div>
                     <div>
                         <Button type="submit" disabled={loading}>
@@ -90,15 +92,16 @@ const Download = () => {
                         </Button>
                     </div>
                     </form>
-                    {result && (
+                    {result && result.length > 0 && (
                         <div>
                             <h3>Analysis Result:</h3>
                             {result && result.map((item, index) => (
                                 <div key={index}>
-                                    <p>{index + 1}: {item[2]} confidence of {item[1]}</p>
+                                    <h4>Image #{index + 1}</h4>
+                                    <p>Result: {item[1]} with confidence of {item[2]}</p>
                                     <img src={item[0]}/>
                                 </div>
-                            ))};
+                            ))}
                         </div>
                     )}
                 </CardContent>

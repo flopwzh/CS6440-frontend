@@ -4,6 +4,8 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card, CardContent } from "./ui/card";
 
+import "./Upload.css"
+
 const Upload = () => {
 
     const [first, setFirst] = useState("");
@@ -12,7 +14,10 @@ const Upload = () => {
     const [gender, setGender] = useState("");
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState("");
+    //const [result, setResult] = useState("");
+    const [confidence, setConfidence] = useState("");
+    const [diagnosis, setDiagnosis] = useState("");
+    const [exists, setExists] = useState("");
 
     const handleUpload = async(e) => {
         e.preventDefault();
@@ -53,7 +58,10 @@ const Upload = () => {
             );
             const data = await response.json();
             console.log(data);
-            setResult(data);
+            //setResult(data);
+            setConfidence(data["diagnosis"]["confidence"]);
+            setDiagnosis(data["diagnosis"]["diagnosis"]);
+            setExists(data["patient"]["exists"]);
         } catch(error) {
             console.error("Error uploading image:", error);
             alert("Failed to create patient or upload image");
@@ -64,25 +72,25 @@ const Upload = () => {
 
     return (
         <div>
-            <Card>
+            <Card className="upload-container">
                 <CardContent>
                     <h2>Upload Skin Image</h2>
-                    <form onSubmit={handleUpload}>
+                    <form onSubmit={handleUpload} className="upload-form">
                     <div>
                         <Label htmlFor="first">Patient First Name</Label>
-                        <Input id="first" type="text" value={first} onChange={(e) => setFirst(e.target.value)} required/>
+                        <Input id="first" type="text" value={first} autocomplete="off" onChange={(e) => setFirst(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="last">Patient Last Name</Label>
-                        <Input id="last" type="text" value={last} onChange={(e) => setLast(e.target.value)} required/>
+                        <Input id="last" type="text" value={last} autocomplete="off" onChange={(e) => setLast(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="dob">Patient Date of Birth</Label>
-                        <Input id="dob" type="text" value={dob} onChange={(e) => setDob(e.target.value)} required/>
+                        <Input id="dob" type="text" value={dob} autocomplete="off" onChange={(e) => setDob(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="gender">Patient Gender</Label>
-                        <Input id="gender" type="text" value={gender} onChange={(e) => setGender(e.target.value)} required/>
+                        <Input id="gender" type="text" value={gender} autocomplete="off" onChange={(e) => setGender(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="file">Select Image</Label>
@@ -94,10 +102,18 @@ const Upload = () => {
                         </Button>
                     </div>
                     </form>
-                    {result && (
+                    {diagnosis && confidence && (
                         <div>
                             <h3>Analysis Result:</h3>
-                            <pre>{JSON.stringify(result, null, 2)}</pre>
+                            {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
+                            {exists ? (
+                                <p>Matching patient found in database!</p>
+                            ) : (
+                                <p>No patient found, created new patient!</p>
+                            )
+                            }
+                            <p>Diagnosis: {diagnosis}</p>
+                            <p>Confidence: {confidence}</p>
                         </div>
                     )}
                 </CardContent>
