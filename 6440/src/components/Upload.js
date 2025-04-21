@@ -78,19 +78,19 @@ const Upload = () => {
                     <form onSubmit={handleUpload} className="upload-form">
                     <div>
                         <Label htmlFor="first">Patient First Name</Label>
-                        <Input id="first" type="text" value={first} autocomplete="off" onChange={(e) => setFirst(e.target.value)} required/>
+                        <Input id="first" type="text" value={first} autoComplete="off" onChange={(e) => setFirst(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="last">Patient Last Name</Label>
-                        <Input id="last" type="text" value={last} autocomplete="off" onChange={(e) => setLast(e.target.value)} required/>
+                        <Input id="last" type="text" value={last} autoComplete="off" onChange={(e) => setLast(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="dob">Patient Date of Birth</Label>
-                        <Input id="dob" type="text" value={dob} autocomplete="off" onChange={(e) => setDob(e.target.value)} required/>
+                        <Input id="dob" type="text" value={dob} autoComplete="off" onChange={(e) => setDob(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="gender">Patient Gender</Label>
-                        <Input id="gender" type="text" value={gender} autocomplete="off" onChange={(e) => setGender(e.target.value)} required/>
+                        <Input id="gender" type="text" value={gender} autoComplete="off" onChange={(e) => setGender(e.target.value)} required/>
                     </div>
                     <div>
                         <Label htmlFor="file">Select Image</Label>

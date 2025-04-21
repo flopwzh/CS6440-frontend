@@ -8,9 +8,9 @@ const Navbar = () => {
 		<>
 			<Nav>
 				<NavMenu>
-					<NavLink to="/" activeStyle>
+					{/* <NavLink to="/" activeStyle>
 						Home
-					</NavLink>
+					</NavLink> */}
 					<NavLink to="/Upload" activeStyle>
 						Upload Image
 					</NavLink>
@@ -19,6 +19,9 @@ const Navbar = () => {
 					</NavLink>
 					<NavLink to="/Create" activeStyle>
 						Create Patient
+					</NavLink>
+					<NavLink to="/Search" activeStyle>
+						Search for Patient
 					</NavLink>
 				</NavMenu>
 			</Nav>
