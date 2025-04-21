@@ -81,7 +81,7 @@ const Download = () => {
                     </div>
                     <div>
                         <Button type="submit" disabled={loading}>
-                            {loading ? "Downloading..." : "Get Patient Images"}
+                            {loading ? "Downloading..." : "Get Patient"}
                         </Button>
                     </div>
                     </form>
